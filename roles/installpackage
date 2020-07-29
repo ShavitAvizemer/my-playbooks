@@ -1,0 +1,17 @@
+---
+- name: Install npm
+  apt:
+    name: npm
+    state: present
+
+- name: make sure the latest npm is installed
+  command: npm install -g npm
+ 
+- name: Install packages based on package.json.
+  npm:
+    path: nne
+
+- name: Install typescript
+  npm:
+    name: typescript
+    global: yes

@@ -1,0 +1,5 @@
+---
+- name: Pull file from source
+  git:
+    repo: 'https://github.com/ShavitAvizemer/serverSideTask.git'
+    dest: nne/
