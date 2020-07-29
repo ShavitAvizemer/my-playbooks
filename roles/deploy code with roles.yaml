@@ -1,8 +1,0 @@
----
-- hosts: all
-  user: shavit55
-  become: yes
-  roles: 
-      - copyrole
-      - installpackage
-      - mongodb
