@@ -1,0 +1,29 @@
+---
+- name: install docker & docker-compose
+  hosts: all
+  become: true
+  tasks:
+    - name: "Update and upgrade apt packages"
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 
+    - name: "install packages to allow apt to use a repository over HTTPS"
+      apt:
+        name: ['apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common']
+        update_cache: yes
+    - name: "Add Docker’s official GPG key"
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: "set up the stable repository"
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable
+        state: present
+    - name: "install docker-ce and more"
+      apt:
+        name: docker-ce, docker-ce-cli, containerd.io
+        state: present
+        update_cache: true
+    - name: "install docker-compose"
+      shell: curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
